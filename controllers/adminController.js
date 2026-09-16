@@ -37,46 +37,30 @@ let deactiveUserController = async (req,res)=>{
       data: data
    })
 }
-// update Controller by admin
-// let updateUserController = async (req,res)=>{
-//    let {id}= req.params
-//    await User.findByIdAndUpdate({_id: id},req.body,{new: true})
-//    res.status(200).json({
-//       success: true,
-//       message: `user updated`,
-//    })
-// }
-// user and admin can update profile
+// admin can update Controller 
 let updateUserController = async (req,res)=>{
-   try{
-   let userId;
-   // admin can update
-   if(req.user.role === "admin"){
-      userId = req.params.id
-   }else{
-   // user cann  
-      userId = req.user.id
-   }
-   let updatedUser =await User.findByIdAndUpdate(userId, req.body,{new: true})
-   
-// check user
-if (!updatedUser) { 
-   return res.status(404).json({
-       success: false, 
-       message: "User not found"
-      })
-    }
+   let {id}= req.params
+   await User.findByIdAndUpdate({_id: id},req.body,{new: true})
    res.status(200).json({
       success: true,
       message: `user updated`,
    })
-
-   } catch (error) { 
-      res.status(500).json({ 
-         success: false, 
-         message: "Failed to update user", error: error.message 
-      });
-   }
+}
+// admin can delete 
+let deleteUserController = async (req,res)=>{
+   let {id}= req.params
+   await User.findByIdAndDelete({_id: id})
+   return res.status(200).json({
+      success: true,
+      message: `user deletedted`,
+   })
+}
+// admin can see singleUserController
+let singleUserController = async (req,res)=>{
+   
 }
 
-module.exports = {allUserController,singalUserController,activeUserController,deactiveUserController,updateUserController}
+
+
+
+module.exports = {allUserController,singalUserController,activeUserController,deactiveUserController,updateUserController,deleteUserController}
