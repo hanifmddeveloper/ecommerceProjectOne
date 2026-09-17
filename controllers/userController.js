@@ -7,7 +7,7 @@ let userController = (req,res)=>{
 let createCategogyController = async (req,res)=>{
   try{
    let {name}= req.body
-   let existingName = await Cat.findOne({name: name.toLowerCase})
+   let existingName = await Cat.findOne({name: name.toLowerCase()})
    if(existingName){
    return res.status(400).json({
         success: false,
