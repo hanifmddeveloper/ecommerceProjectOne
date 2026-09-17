@@ -45,5 +45,33 @@ try {
   console.error("Error while sending mail:", err);
 }
 }
+async function categoryCreatedEmail (email,categoryName){
+  try{
+   const info = await transporter.sendMail({
+      from: process.env.NODEMAILER_EMAIL,
+      to: email,
+      subject: "Category Created Successfully",
+      html: `
+        <h2>Category Created Successfully</h2>
 
-module.exports= {varificationEmail,forgetPasswordEmail}
+        <p>Your category has been created successfully.</p>
+
+        <p>
+          <strong>Category:</strong> ${categoryName}
+        </p>
+
+        <p>Thank you.</p>
+      `,
+    });
+
+    console.log("Email sent:", info.messageId);
+
+    return true;
+  } catch (error) {
+    console.error("Email sending error:", error);
+    return false;
+  }
+}
+
+
+module.exports= {varificationEmail,forgetPasswordEmail,categoryCreatedEmail}

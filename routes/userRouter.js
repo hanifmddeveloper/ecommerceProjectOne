@@ -1,12 +1,14 @@
 const express = require('express')
 const _ = express.Router()
-const {userController,createCategogyController,getAllCategoryController} = require('../controllers/userController')
+const {userController,createCategogyController,getAllCategoryController,updatCategoryController,deleteUserController} = require('../controllers/userController')
 
 
 
 _.get('/user/product',userController)
 _.post('/create/category',createCategogyController)
 _.get('/all/category',getAllCategoryController)
+_.post('/update/category/:id',updatCategoryController)
+_.delete('/delete/category/:id',deleteUserController)
 
 // swagger for user can create progut
 /**
