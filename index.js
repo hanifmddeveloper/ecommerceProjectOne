@@ -9,9 +9,25 @@ const adminRouter = require('./routes/adminRouter')
 const vendorRouter = require('./routes/vendorRouter')
 const {adminMiddleware,vendorMiddleware,userMiddleware} = require('./middleware/roleMiddleware')
 const mongodbConfig = require('./config/mongodbConfig')
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./config/swagger");
+
+
+
+
 
 app.use(express.json())
 mongodbConfig()
+
+app.use(
+  "/ecommerce2601",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, {
+    explorer: true,
+  })
+);
+
+
 
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/user',userMiddleware, userRouter)

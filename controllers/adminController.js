@@ -48,12 +48,29 @@ let updateUserController = async (req,res)=>{
 }
 // admin can delete 
 let deleteUserController = async (req,res)=>{
+   try{
    let {id}= req.params
+    if (!id) {
+    return req.status(400).json({
+       success: false,
+       message: 'User id required'
+       })
+   }
    await User.findByIdAndDelete({_id: id})
+   if (!User) {
+     return res.status(400).json({ 
+      success: false,
+      message: 'User not found'
+    })
+  }
    return res.status(200).json({
       success: true,
       message: `user deletedted`,
    })
+
+}catch (error) {
+        return res.status(500).json({ status: false, message: 'Internel server error' })
+    }
 }
 // admin can see singleUserController
 let singleUserController = async (req,res)=>{
